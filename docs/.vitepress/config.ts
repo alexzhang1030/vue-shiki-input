@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
 import unocss from 'unocss/vite'
+import jsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -19,6 +20,7 @@ export default defineConfig({
   vite: {
     plugins: [
       unocss(),
+      jsx(),
     ],
   },
 })

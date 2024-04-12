@@ -38,7 +38,10 @@
     "build": "vite build",
     "play": "pnpm -F playground dev",
     "prepublishOnly": "pnpm run build",
-    "release": "bumpp --commit \"chore: release v%s\" --push --tag && pnpm publish"
+    "release": "bumpp --commit \"chore: release v%s\" --push --tag && pnpm publish",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "peerDependencies": {
     "@vueuse/core": ">=9.0.0",
@@ -56,9 +59,11 @@
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.4.4",
     "unocss": "^0.59.1",
+    "unplugin-vue-components": "^0.26.0",
     "vite": "^5.2.8",
     "vite-plugin-dts": "^3.8.1",
-    "vite-tsconfig-paths": "^4.3.2"
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitepress": "^1.1.0"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

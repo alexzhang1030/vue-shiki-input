@@ -6,6 +6,8 @@
 
 A Shiki input component for Vue.
 
+> 🔨 Working on docs...
+
 ## Installation
 
 ```bash

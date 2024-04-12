@@ -1,3 +1,14 @@
+# Usage
+
+## Installation
+
+```bash
+pnpm install vue-shiki-input
+```
+
+## Usage
+
+```vue
 <script setup lang="ts">
 import { ref } from 'vue'
 import { VueShikiInput } from 'vue-shiki-input'
@@ -22,3 +33,4 @@ const text = ref('const a = 1;')
     line-numbers
   />
 </template>
+```

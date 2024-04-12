@@ -1,0 +1,51 @@
+.__shiki-vue-input {
+
+  &.line-numbers {
+    code {
+      counter-reset: step;
+      counter-increment: step 0;
+    }
+    code .line::before {
+      content: counter(step);
+      counter-increment: step;
+      width: 1rem;
+      margin-right: 1.5rem;
+      display: inline-block;
+      text-align: right;
+      color: var(--shiki-vue-input-line-number-color);
+    }
+  }
+
+  /* Copied from `@unocss/reset/tailwind.css` */
+
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+  }
+
+  code, pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; 1,
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    font-size: 1em;
+  }
+
+  pre {
+    margin: 0;
+  }
+
+  textarea {
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+  }
+
+}
+

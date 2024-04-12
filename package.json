@@ -1,0 +1,71 @@
+{
+  "name": "vue-shiki-input",
+  "type": "module",
+  "version": "1.0.0",
+  "packageManager": "pnpm@8.15.6",
+  "description": "A Shiki input component for Vue.",
+  "author": "alexzhang1030",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexzhang1030/vue-shiki-input.git"
+  },
+  "keywords": [
+    "shiki",
+    "input",
+    "shiki input",
+    "vue"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "prepare": "simple-git-hooks",
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "play": "pnpm -F playground dev",
+    "prepublishOnly": "pnpm run build",
+    "release": "bumpp --commit \"chore: release v%s\" --push --tag && pnpm publish"
+  },
+  "peerDependencies": {
+    "@vueuse/core": ">=9.0.0",
+    "shiki": ">=1.1.0",
+    "vue": ">=3.2.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.12.2",
+    "@unocss/reset": "^0.59.2",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "bumpp": "^9.4.0",
+    "eslint": "npm:eslint-ts-patch@8.56.0-0",
+    "eslint-ts-patch": "8.56.0-0",
+    "lint-staged": "^15.2.2",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.4.4",
+    "unocss": "^0.59.1",
+    "vite": "^5.2.8",
+    "vite-plugin-dts": "^3.8.1",
+    "vite-tsconfig-paths": "^4.3.2"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": [
+      "eslint --fix"
+    ]
+  }
+}

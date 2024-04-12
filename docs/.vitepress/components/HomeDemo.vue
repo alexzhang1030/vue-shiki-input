@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import 'vue-shiki-input/style.css'
+import '../../../src/style.css'
 import { VueShikiInput } from '../../../src'
 
 const text = ref('const a = 1;')

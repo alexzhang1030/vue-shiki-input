@@ -10,7 +10,7 @@ let globalBundlesFetcher: Promise<typeof globalBundles> | null = null
 
 export async function fetchShikiBundles() {
   const [{ bundledLanguagesInfo }, { bundledThemesInfo }] = await Promise.all([
-    import('shiki/bundle/web'),
+    import('shiki/bundle/full'),
     import('shiki/themes'),
   ])
   return {

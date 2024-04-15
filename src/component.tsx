@@ -56,6 +56,7 @@ export const VueShikiInput = defineComponent({
           autocapitalize="off"
           spellcheck="false"
           ref={textareaRef}
+          disabled={props.disabled}
           class={[
             commonClass,
             'absolute z-10 resize-none font-mono overflow-auto bg-transparent b-none',

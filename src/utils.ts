@@ -8,14 +8,22 @@ let globalBundles: {
 }
 let globalBundlesFetcher: Promise<typeof globalBundles> | null = null
 
-async function fetchBundles(skip: boolean) {
-  await loadWasm(wasm).catch(console.error)
-  if (skip)
-    return globalBundles
+export async function fetchShikiBundles() {
   const [{ bundledLanguagesInfo }, { bundledThemesInfo }] = await Promise.all([
     import('shiki/bundle/web'),
     import('shiki/themes'),
   ])
+  return {
+    bundledLanguagesInfo,
+    bundledThemesInfo,
+  }
+}
+
+async function fetchBundles(skip: boolean) {
+  await loadWasm(wasm).catch(console.error)
+  if (skip)
+    return globalBundles
+  const { bundledLanguagesInfo, bundledThemesInfo } = await fetchShikiBundles()
   return {
     bundledLanguagesInfo,
     bundledThemesInfo,

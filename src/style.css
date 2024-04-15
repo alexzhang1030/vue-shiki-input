@@ -33,6 +33,10 @@
     font-size: 1em;
   }
 
+  code {
+    cursor: text !important;
+  }
+
   pre {
     margin: 0;
   }

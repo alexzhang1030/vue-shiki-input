@@ -49,26 +49,32 @@ export const VueShikiInput = defineComponent({
           }}
         >
         </span>
-        <textarea
-          v-model={modelValue.value}
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          ref={textareaRef}
-          disabled={props.disabled}
-          class={[
-            commonClass,
-            'absolute z-10 resize-none font-mono overflow-auto bg-transparent b-none',
-            'outline-none caret-white text-transparent flex-1 p-0',
-            {
-              'ml-2.5rem!': props.lineNumbers,
-            },
-          ]}
-          style={{
-            padding: `${props.offset!.y}px ${props.offset!.x}px`,
-          }}
-        />
+        {
+          props.disabled
+            ? null
+            : (
+              <textarea
+                v-model={modelValue.value}
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                ref={textareaRef}
+                disabled={props.disabled}
+                class={[
+                  commonClass,
+                  'absolute z-10 resize-none font-mono overflow-auto bg-transparent b-none',
+                  'outline-none caret-white text-transparent flex-1 p-0',
+                  {
+                    'ml-2.5rem!': props.lineNumbers,
+                  },
+                ]}
+                style={{
+                  padding: `${props.offset!.y}px ${props.offset!.x}px`,
+                }}
+              />
+              )
+        }
       </div>
     )
   },

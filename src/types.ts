@@ -13,7 +13,13 @@ export interface VueShikiInputProps {
    * @default false
    */
   autoBackground?: boolean
+  /**
+   * Preload languages
+   */
   langs?: (LanguageInput | string)[]
+  /**
+   * Preload themes
+   */
   themes?: (ThemeInput | string)[]
   codeToHastOptions?: CodeToHastOptions
   lineNumbers?: boolean

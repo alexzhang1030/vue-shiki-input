@@ -1,12 +1,16 @@
 import { getHighlighterCore, loadWasm } from 'shiki/core'
-import type { BundledLanguageInfo, BundledThemeInfo, LanguageRegistration, ThemeRegistration } from 'shiki/core'
+import type { BundledLanguageInfo, BundledThemeInfo, CodeToHastOptions, HighlighterCore, LanguageRegistration, ThemeRegistration } from 'shiki/core'
 import wasm from 'shiki/wasm'
+import type { VueShikiInputProps } from './types'
 
 let globalBundles: {
   bundledLanguagesInfo: BundledLanguageInfo[]
   bundledThemesInfo: BundledThemeInfo[]
 }
 let globalBundlesFetcher: Promise<typeof globalBundles> | null = null
+
+const themeCache = new Map<string, ThemeRegistration>()
+const languageCache = new Map<string, LanguageRegistration[]>()
 
 export async function fetchShikiBundles() {
   const [{ bundledLanguagesInfo }, { bundledThemesInfo }] = await Promise.all([
@@ -24,6 +28,10 @@ async function fetchBundles(skip: boolean) {
   if (skip)
     return globalBundles
   const { bundledLanguagesInfo, bundledThemesInfo } = await fetchShikiBundles()
+  globalBundles = {
+    bundledLanguagesInfo,
+    bundledThemesInfo,
+  }
   return {
     bundledLanguagesInfo,
     bundledThemesInfo,
@@ -37,53 +45,80 @@ export async function loadBundles(skip: boolean) {
   return globalBundlesFetcher
 }
 
-// If use built-in themes and languages, should load theme first
 export async function loadHighlighter(props: {
-  builtinThemes?: string[]
-  builtinLanguages?: string[]
-  customThemes?: ThemeRegistration[]
-  customLanguages?: LanguageRegistration[]
   skipLoadBuiltins: boolean
 }) {
   const {
-    builtinLanguages = [],
-    builtinThemes = [],
-    customLanguages = [],
-    customThemes = [],
     skipLoadBuiltins,
   } = props
 
-  const { bundledLanguagesInfo, bundledThemesInfo } = await loadBundles(skipLoadBuiltins)
-
-  const [themes, langs] = await Promise.all([
-    loadThemes(bundledThemesInfo, builtinThemes),
-    loadLanguages(bundledLanguagesInfo, builtinLanguages),
-  ])
-
-  const highlighter = await getHighlighterCore({
-    themes: [...themes, ...customThemes],
-    langs: [...langs, ...customLanguages],
-  })
+  await loadBundles(skipLoadBuiltins)
+  const highlighter = await getHighlighterCore()
 
   return highlighter
 }
 
-async function loadThemes(themes: BundledThemeInfo[], names: string[]) {
+export async function loadThemes(names: string[]) {
   return (await Promise.all(
     names.map(async (name) => {
-      const theme = themes.find(t => t.id === name)
-      if (theme)
-        return (await theme.import()).default
+      const cache = themeCache.get(name)
+      if (cache)
+        return cache
+      const theme = globalBundles.bundledThemesInfo.find(t => t.id === name)
+      if (theme) {
+        const themeValue = (await theme.import()).default
+        themeCache.set(name, themeValue)
+        return themeValue
+      }
     }),
   ).then(l => l.filter(Boolean))) as ThemeRegistration[]
 }
 
-async function loadLanguages(langs: BundledLanguageInfo[], names: string[]) {
+export async function loadLanguages(names: string[]) {
   return (await Promise.all(
     names.map(async (name) => {
-      const lang = langs.find(t => t.id === name)
-      if (lang)
-        return (await lang.import()).default
+      const cache = languageCache.get(name)
+      if (cache)
+        return cache
+      const lang = globalBundles.bundledLanguagesInfo.find(t => t.id === name)
+      if (lang) {
+        const langValue = (await lang.import()).default
+        languageCache.set(name, langValue)
+        return langValue
+      }
     }),
   ).then(l => l.filter(Boolean))).flat() as LanguageRegistration[]
+}
+
+export function getCurrentThemeName(options: CodeToHastOptions) {
+  const theme = 'theme' in options
+    ? options.theme
+    : options.defaultColor
+      ? options.themes[options.defaultColor]
+      : null
+  return theme
+}
+
+export function getCurrentTheme(themes: VueShikiInputProps['themes'], options: CodeToHastOptions, highlighter: HighlighterCore) {
+  const theme = getCurrentThemeName(options)
+  if (!theme)
+    return null
+  if (!themes?.includes(theme))
+    return null
+  return highlighter.getTheme(theme)
+}
+
+export function currentThemeLoaded(highlighter: HighlighterCore, codeToHastOptions: CodeToHastOptions) {
+  const loadedTheme = highlighter.getLoadedThemes()
+
+  const themeName = getCurrentThemeName(codeToHastOptions)
+  const themeId = typeof themeName === 'string' ? themeName : themeName?.name
+
+  return themeId && loadedTheme.includes(themeId)
+}
+
+export function currentLangLoaded(highlighter: HighlighterCore, codeToHastOptions: CodeToHastOptions) {
+  const loadedLang = highlighter.getLoadedLanguages()
+  const langId = codeToHastOptions.lang
+  return langId && loadedLang.includes(langId)
 }

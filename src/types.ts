@@ -4,6 +4,15 @@ import type { Prop } from 'vue'
 export interface VueShikiInputProps {
   modelValue: string
   disabled?: boolean
+  /**
+   * Loading state, you should use v-model:loading to bind this prop
+   */
+  loading?: boolean
+  /**
+   * Automatically set background color based on the theme
+   * @default false
+   */
+  autoBackground?: boolean
   langs?: (LanguageInput | string)[]
   themes?: (ThemeInput | string)[]
   codeToHastOptions?: CodeToHastOptions
@@ -13,12 +22,20 @@ export interface VueShikiInputProps {
     textareaClass?: string
     codeClass?: string
   }
+  /**
+   * Skip loading built-in themes and languages
+   * This will be useful when you sure you don't need built-in themes and languages
+   */
   skipLoadBuiltins?: boolean
   focus?: boolean
   offset?: {
     x: number
     y: number
   }
+  /**
+   * Required when use customTheme
+   */
+  darkTheme?: boolean
 }
 
 export type ResolvedVueShikiInputProps = Required<VueShikiInputProps>
@@ -27,6 +44,13 @@ export const vueShikiInputProps = {
   modelValue: {
     type: String,
     required: true,
+  },
+  loading: {
+    type: Boolean,
+  },
+  autoBackground: {
+    type: Boolean,
+    default: false,
   },
   langs: {
     type: Array,
@@ -67,6 +91,9 @@ export const vueShikiInputProps = {
   offset: {
     type: Object,
     default: () => ({ x: 0, y: 0 }),
+  },
+  darkTheme: {
+    type: Boolean,
   },
 } as {
   [K in keyof ResolvedVueShikiInputProps]: Prop<ResolvedVueShikiInputProps[K]>

@@ -2,7 +2,7 @@ import type { Ref } from 'vue'
 import { computed, ref, shallowRef, watchEffect } from 'vue'
 import type { HighlighterCore, LanguageRegistration, ThemeRegistration } from 'shiki/core'
 import type { ResolvedVueShikiInputProps } from './types'
-import { loadHighlighter } from './utils'
+import { currentLangLoaded, getCurrentTheme, loadHighlighter, loadLanguages, loadThemes } from './utils'
 
 export function useHighlight(input: Ref<string | undefined>, props: Ref<ResolvedVueShikiInputProps>) {
   const loadingInfra = ref(true)
@@ -10,30 +10,7 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
   const output = ref<string>('')
   const highlighter = shallowRef<HighlighterCore>()
 
-  const [builtinThemes, customThemes] = props.value.themes?.reduce<[string[], ThemeRegistration[]]>((acc, t) => {
-    if (!t)
-      return acc
-    if (typeof t === 'string')
-      acc[0].push(t)
-    else
-      acc[1].push(t as ThemeRegistration)
-    return acc
-  }, [[], []])
-  const [builtinLanguages, customLanguages] = props.value.langs?.reduce<[string[], LanguageRegistration[]]>((acc, t) => {
-    if (!t)
-      return acc
-    if (typeof t === 'string')
-      acc[0].push(t)
-    else
-      acc[1].push(t as LanguageRegistration)
-    return acc
-  }, [[], []])
-
   loadHighlighter({
-    builtinLanguages,
-    builtinThemes,
-    customLanguages,
-    customThemes,
     skipLoadBuiltins: props.value.skipLoadBuiltins,
   })
     .then(h => highlighter.value = h)
@@ -42,14 +19,68 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
     })
     .catch(console.error)
 
+  const propsThemes = computed(() => props.value.themes ?? [])
+  const propsLangs = computed(() => props.value.langs ?? [])
+
+  watchEffect(async () => {
+    if (props.value.skipLoadBuiltins || !highlighter.value || !propsThemes.value.length || !propsLangs.value.length)
+      return
+
+    loadingInfra.value = true
+
+    const [builtinThemes, customThemes] = propsThemes.value.reduce<[string[], ThemeRegistration[]]>((acc, t) => {
+      if (!t)
+        return acc
+      if (typeof t === 'string')
+        acc[0].push(t)
+      else
+        acc[1].push(t as ThemeRegistration)
+      return acc
+    }, [[], []])
+
+    const [builtinLanguages, customLanguages] = propsLangs.value.reduce<[string[], LanguageRegistration[]]>((acc, t) => {
+      if (!t)
+        return acc
+      if (typeof t === 'string')
+        acc[0].push(t)
+      else
+        acc[1].push(t as LanguageRegistration)
+      return acc
+    }, [[], []])
+
+    const [themes, langs] = await Promise.all([
+      loadThemes(builtinThemes),
+      loadLanguages(builtinLanguages),
+    ])
+
+    await Promise.all([
+      highlighter.value.loadTheme(...customThemes, ...themes),
+      highlighter.value.loadLanguage(...customLanguages, ...langs),
+    ])
+
+    loadingInfra.value = false
+  })
+
   watchEffect(() => {
-    // use input.value as a dependency
+    // use these dep to trigger reactivity
     // eslint-disable-next-line no-unused-expressions
     input.value
-    if (!highlighter.value) {
+    // eslint-disable-next-line no-unused-expressions
+    props.value.codeToHastOptions
+
+    if (!highlighter.value || loadingInfra.value || !props.value.themes.length || !props.value.langs.length) {
       output.value = input.value ?? ''
       return
     }
+
+    // if current theme / lang is not loaded, skip
+
+    const themeLoaded = currentLangLoaded(highlighter.value, props.value.codeToHastOptions)
+    const langLoaded = currentLangLoaded(highlighter.value, props.value.codeToHastOptions)
+
+    if (!themeLoaded || !langLoaded)
+      return
+
     highlighting(highlighter.value)
   })
 
@@ -73,8 +104,28 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
     loadingToHTML.value = false
   }
 
+  const background = computed(() => {
+    if (!highlighter.value || !props.value || !props.value.autoBackground || loadingInfra.value)
+      return null
+    const themeLoaded = currentLangLoaded(highlighter.value, props.value.codeToHastOptions)
+    if (!themeLoaded)
+      return
+    const theme = getCurrentTheme(propsThemes.value, props.value.codeToHastOptions, highlighter.value)
+    if (!theme)
+      return null
+    const color = theme.bg
+    const type = theme.type
+    if (!color || !color.trim().length)
+      return null
+    return {
+      color,
+      type,
+    }
+  })
+
   return {
     loading: computed(() => loadingInfra.value || loadingToHTML.value),
     output,
+    background,
   }
 }

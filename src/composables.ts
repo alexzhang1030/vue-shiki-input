@@ -14,9 +14,6 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
     skipLoadBuiltins: props.value.skipLoadBuiltins,
   })
     .then(h => highlighter.value = h)
-    .then(() => {
-      loadingInfra.value = false
-    })
     .catch(console.error)
 
   const propsThemes = computed(() => props.value.themes ?? [])

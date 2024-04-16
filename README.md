@@ -6,6 +6,10 @@
 
 A Shiki input component for Vue.
 
+Inspired by the awesome🤩 shiki playground from [shiki-docs home](https://shiki.style/).
+
+Check out the [docs](https://vue-shiki-input.vercel.app/)!
+
 > 🔨 Working on docs...
 
 ## Installation

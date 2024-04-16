@@ -91,10 +91,8 @@ export const VueShikiInput = defineComponent({
                 class={[
                   commonClass,
                   'absolute z-10 resize-none font-mono overflow-auto bg-transparent b-none',
-                  'outline-none text-transparent flex-1 p-0',
-                  {
-                    'ml-2.5rem!': props.lineNumbers,
-                  },
+                  'outline-none text-transparent p-0',
+                  props.lineNumbers ? 'ml-2.5rem! w-[calc(100%-2.5rem)]!' : 'w-full!',
                   [
                     props.darkTheme || background.value?.type === 'dark'
                       ? 'caret-white'

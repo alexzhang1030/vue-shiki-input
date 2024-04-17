@@ -45,13 +45,13 @@ export async function loadBundles(skip: boolean) {
 }
 
 export async function loadHighlighter(props: {
-  skipLoadBuiltins: boolean
+  skipLoadShikiBundled: boolean
 }) {
   const {
-    skipLoadBuiltins,
+    skipLoadShikiBundled,
   } = props
 
-  await loadBundles(skipLoadBuiltins)
+  await loadBundles(skipLoadShikiBundled)
   const highlighter = await getHighlighterCore()
 
   return highlighter

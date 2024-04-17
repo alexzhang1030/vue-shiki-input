@@ -95,21 +95,7 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
 
   function highlighting(highlighter: HighlighterCore) {
     loadingToHTML.value = true
-    output.value = highlighter.codeToHtml(input.value ?? '', {
-      ...props.value.codeToHastOptions,
-      transformers: [
-        ...props.value.codeToHastOptions.transformers ?? [],
-        {
-          preprocess(code) {
-            // Workaround for https://github.com/shikijs/shiki/issues/608
-            // When last span is empty, it's height is 0px
-            // so add a newline to render it correctly
-            if (code.endsWith('\n'))
-              return `${code}\n`
-          },
-        },
-      ],
-    })
+    output.value = highlighter.codeToHtml(input.value ?? '', props.value.codeToHastOptions)
     loadingToHTML.value = false
   }
 

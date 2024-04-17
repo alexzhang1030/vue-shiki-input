@@ -2,7 +2,13 @@ import type { CodeToHastOptions, LanguageInput, ThemeInput } from 'shiki/core'
 import type { Prop } from 'vue'
 
 export interface VueShikiInputProps {
+  /**
+   * The code to be edited
+   */
   modelValue: string
+  /**
+   * Disabled editor, will only render code
+   */
   disabled?: boolean
   /**
    * Loading state, you should use v-model:loading to bind this prop
@@ -14,16 +20,28 @@ export interface VueShikiInputProps {
    */
   autoBackground?: boolean
   /**
-   * Preload languages
+   * Preload languages, you can ignore this if you don't need to preload languages
    */
   langs?: (LanguageInput | string)[]
   /**
-   * Preload themes
+   * Preload themes, you can ignore this if you don't need to preload languages
    */
   themes?: (ThemeInput | string)[]
+  /**
+   * Same as codeToHTML props in shiki
+   */
   codeToHastOptions?: CodeToHastOptions
+  /**
+   * Show line numbers
+   */
   lineNumbers?: boolean
+  /**
+   * Line numbers color
+   */
   lineNumbersColor?: string
+  /**
+   * Custom styles
+   */
   styles?: {
     textareaClass?: string
     codeClass?: string
@@ -33,13 +51,21 @@ export interface VueShikiInputProps {
    * This will be useful when you sure you don't need built-in themes and languages
    */
   skipLoadBuiltins?: boolean
+  /**
+   * Focus on the editor when mounted
+   */
   focus?: boolean
+  /**
+   * Editor offset
+   * - x -> padding left+right
+   * - y -> padding top+bottom
+   */
   offset?: {
     x: number
     y: number
   }
   /**
-   * Required when use customTheme
+   * Required when use customTheme, and cannot detect dark theme automatically (by type in theme)
    */
   darkTheme?: boolean
 }

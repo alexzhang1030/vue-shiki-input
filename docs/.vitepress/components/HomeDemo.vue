@@ -85,7 +85,6 @@ async function randomize() {
     v-model="text"
     v-model:loading="shikiLoading"
     class="w-full h-500px bg-gray-800 text-gray-200 mt4 b-1 b-solid border-gray/8 rounded-lg!"
-    :langs="langs.map(lang => lang.id)" :themes="themes.map(theme => theme.id)"
     :code-to-hast-options="{
       lang: currentLang,
       theme: currentTheme,

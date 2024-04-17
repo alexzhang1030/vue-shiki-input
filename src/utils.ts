@@ -1,7 +1,6 @@
 import { getHighlighterCore, loadWasm } from 'shiki/core'
 import type { BundledLanguageInfo, BundledThemeInfo, CodeToHastOptions, HighlighterCore, LanguageRegistration, ThemeRegistration } from 'shiki/core'
 import wasm from 'shiki/wasm'
-import type { VueShikiInputProps } from './types'
 
 let globalBundles: {
   bundledLanguagesInfo: BundledLanguageInfo[]
@@ -59,6 +58,8 @@ export async function loadHighlighter(props: {
 }
 
 export async function loadThemes(names: string[]) {
+  if (!names.length)
+    return []
   return (await Promise.all(
     names.map(async (name) => {
       const cache = themeCache.get(name)
@@ -75,6 +76,8 @@ export async function loadThemes(names: string[]) {
 }
 
 export async function loadLanguages(names: string[]) {
+  if (!names.length)
+    return []
   return (await Promise.all(
     names.map(async (name) => {
       const cache = languageCache.get(name)
@@ -99,26 +102,36 @@ export function getCurrentThemeName(options: CodeToHastOptions) {
   return theme
 }
 
-export function getCurrentTheme(themes: VueShikiInputProps['themes'], options: CodeToHastOptions, highlighter: HighlighterCore) {
+export function getCurrentTheme(options: CodeToHastOptions, highlighter: HighlighterCore) {
   const theme = getCurrentThemeName(options)
   if (!theme)
     return null
-  if (!themes?.includes(theme))
+  const themeValue = highlighter.getTheme(theme)
+  if (!themeValue)
     return null
-  return highlighter.getTheme(theme)
+  return themeValue
 }
 
 export function currentThemeLoaded(highlighter: HighlighterCore, codeToHastOptions: CodeToHastOptions) {
   const loadedTheme = highlighter.getLoadedThemes()
 
-  const themeName = getCurrentThemeName(codeToHastOptions)
-  const themeId = typeof themeName === 'string' ? themeName : themeName?.name
+  const theme = getCurrentThemeName(codeToHastOptions)
+  const themeId = typeof theme === 'string' ? theme : theme?.name
 
-  return themeId && loadedTheme.includes(themeId)
+  return {
+    loaded: themeId && loadedTheme.includes(themeId),
+    preloaded: themeId ? themeCache.has(themeId) : false,
+    id: themeId,
+  }
 }
 
 export function currentLangLoaded(highlighter: HighlighterCore, codeToHastOptions: CodeToHastOptions) {
   const loadedLang = highlighter.getLoadedLanguages()
   const langId = codeToHastOptions.lang
-  return langId && loadedLang.includes(langId)
+
+  return {
+    loaded: langId && loadedLang.includes(langId),
+    preloaded: langId ? languageCache.has(langId) : false,
+    id: langId,
+  }
 }

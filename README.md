@@ -47,6 +47,79 @@ const text = ref('const a = 1;')
 </template>
 ```
 
+### Props
+
+```ts
+interface VueShikiInputProps {
+  /**
+   * The code to be edited
+   */
+  modelValue: string
+  /**
+   * Disabled editor, will only render code
+   */
+  disabled?: boolean
+  /**
+   * Loading state, you should use v-model:loading to bind this prop
+   */
+  loading?: boolean
+  /**
+   * Automatically set background color based on the theme
+   * @default false
+   */
+  autoBackground?: boolean
+  /**
+   * Preload languages, you can ignore this if you don't need to preload languages
+   */
+  langs?: (LanguageInput | string)[]
+  /**
+   * Preload themes, you can ignore this if you don't need to preload languages
+   */
+  themes?: (ThemeInput | string)[]
+  /**
+   * Same as codeToHTML props in shiki
+   */
+  codeToHastOptions?: CodeToHastOptions
+  /**
+   * Show line numbers
+   */
+  lineNumbers?: boolean
+  /**
+   * Line numbers color
+   */
+  lineNumbersColor?: string
+  /**
+   * Custom styles
+   */
+  styles?: {
+    textareaClass?: string
+    codeClass?: string
+  }
+  /**
+   * Skip loading built-in themes and languages
+   * This will be useful when you sure you don't need built-in themes and languages
+   */
+  skipLoadBuiltins?: boolean
+  /**
+   * Focus on the editor when mounted
+   */
+  focus?: boolean
+  /**
+   * Editor offset
+   * - x -> padding left+right
+   * - y -> padding top+bottom
+   */
+  offset?: {
+    x: number
+    y: number
+  }
+  /**
+   * Required when use customTheme, and cannot detect dark theme automatically (by type in theme)
+   */
+  darkTheme?: boolean
+}
+```
+
 ## License
 
 MIT

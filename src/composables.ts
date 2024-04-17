@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 import { computed, ref, shallowRef, watchEffect } from 'vue'
-import type { HighlighterCore, LanguageRegistration, ThemeRegistration } from 'shiki/core'
+import type { HighlighterCore, LanguageRegistration, ThemeRegistration, ThemeRegistrationResolved } from 'shiki/core'
 import { watchDebounced } from '@vueuse/core'
 import type { ResolvedVueShikiInputProps } from './types'
 import { currentLangLoaded, currentThemeLoaded, getCurrentTheme, loadHighlighter, loadLanguages, loadThemes } from './utils'
@@ -113,23 +113,24 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
     loadingToHTML.value = false
   }
 
-  const background = computed(() => {
+  const background = ref<{ color: string, type: ThemeRegistrationResolved['type'] } | null>(null)
+
+  watchEffect(() => {
     if (!highlighter.value || !props.value || !props.value.autoBackground || preloading.value || loadingOnDemand.value)
-      return null
+      return
     const { loaded } = currentLangLoaded(highlighter.value, props.value.codeToHastOptions)
     if (!loaded)
       return
     const theme = getCurrentTheme(props.value.codeToHastOptions, highlighter.value)
     if (!theme)
-      return null
+      return
     const color = theme.bg
     const type = theme.type
-    if (!color || !color.trim().length)
-      return null
-    return {
-      color,
-      type,
+    if (!color || !color.trim().length) {
+      background.value = null
+      return
     }
+    background.value = { color, type }
   })
 
   return {

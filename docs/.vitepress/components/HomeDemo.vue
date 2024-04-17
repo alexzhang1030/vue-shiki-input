@@ -93,7 +93,7 @@ async function randomize() {
       x: 10,
       y: 10,
     }"
-    line-numbers auto-background
+    line-numbers auto-background focus
   >
     <template #header>
       <div

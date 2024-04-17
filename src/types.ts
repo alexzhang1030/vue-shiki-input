@@ -50,11 +50,7 @@ export interface VueShikiInputProps {
    * Skip loading built-in themes and languages
    * This will be useful when you sure you don't need built-in themes and languages
    */
-  skipLoadBuiltins?: boolean
-  /**
-   * Focus on the editor when mounted
-   */
-  focus?: boolean
+  skipLoadShikiBundled?: boolean
   /**
    * Editor offset
    * - x -> padding left+right
@@ -112,11 +108,7 @@ export const vueShikiInputProps = {
     type: Object,
     default: () => ({}),
   },
-  skipLoadBuiltins: {
-    type: Boolean,
-    default: false,
-  },
-  focus: {
+  skipLoadShikiBundled: {
     type: Boolean,
     default: false,
   },

@@ -13,7 +13,7 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
   const highlighter = shallowRef<HighlighterCore>()
 
   loadHighlighter({
-    skipLoadBuiltins: props.value.skipLoadBuiltins,
+    skipLoadBuiltins: props.value.skipLoadShikiBundled,
   })
     .then(h => highlighter.value = h)
     .catch(console.error)
@@ -24,7 +24,7 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
 
   // Preload logic
   watchEffect(async () => {
-    if (props.value.skipLoadBuiltins || !highlighter.value || !propsThemes.value.length || !propsLangs.value.length)
+    if (props.value.skipLoadShikiBundled || !highlighter.value || !propsThemes.value.length || !propsLangs.value.length)
       return
 
     preloading.value = true

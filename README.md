@@ -50,7 +50,7 @@ const text = ref('const a = 1;')
 ### Props
 
 ```ts
-interface VueShikiInputProps {
+export interface VueShikiInputProps {
   /**
    * The code to be edited
    */
@@ -99,11 +99,7 @@ interface VueShikiInputProps {
    * Skip loading built-in themes and languages
    * This will be useful when you sure you don't need built-in themes and languages
    */
-  skipLoadBuiltins?: boolean
-  /**
-   * Focus on the editor when mounted
-   */
-  focus?: boolean
+  skipLoadShikiBundled?: boolean
   /**
    * Editor offset
    * - x -> padding left+right

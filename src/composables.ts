@@ -134,7 +134,7 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
   })
 
   return {
-    loading: computed(() => preloading.value || loadingToHTML.value),
+    loading: computed(() => preloading.value || loadingOnDemand.value || loadingToHTML.value),
     output,
     background,
   }

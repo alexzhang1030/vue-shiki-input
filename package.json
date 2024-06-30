@@ -1,7 +1,7 @@
 {
   "name": "vue-shiki-input",
   "type": "module",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "packageManager": "pnpm@9.4.0",
   "description": "A Shiki input component for Vue.",
   "author": "alexzhang1030",

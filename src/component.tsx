@@ -77,34 +77,34 @@ export const VueShikiInput = defineComponent({
           >
           </span>
           {
-          props.disabled
-            ? null
-            : (
-              <textarea
-                v-model={modelValue.value}
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-                ref={textareaRef}
-                disabled={props.disabled}
-                class={[
-                  commonClass,
-                  'absolute z-10 resize-none font-mono overflow-auto bg-transparent b-none',
-                  'outline-none text-transparent p-0',
-                  props.lineNumbers ? 'ml-2.5rem! w-[calc(100%-2.5rem)]!' : 'w-full!',
-                  [
-                    props.darkTheme || background.value?.type === 'dark'
-                      ? 'caret-white'
-                      : 'caret-black',
-                  ],
-                ]}
-                style={{
-                  padding: `${props.offset!.y}px ${props.offset!.x}px`,
-                }}
-              />
-              )
-        }
+            props.disabled
+              ? null
+              : (
+                  <textarea
+                    v-model={modelValue.value}
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    ref={textareaRef}
+                    disabled={props.disabled}
+                    class={[
+                      commonClass,
+                      'absolute z-10 resize-none font-mono overflow-auto bg-transparent b-none',
+                      'outline-none text-transparent p-0',
+                      props.lineNumbers ? 'ml-2.5rem! w-[calc(100%-2.5rem)]!' : 'w-full!',
+                      [
+                        props.darkTheme || background.value?.type === 'dark'
+                          ? 'caret-white'
+                          : 'caret-black',
+                      ],
+                    ]}
+                    style={{
+                      padding: `${props.offset!.y}px ${props.offset!.x}px`,
+                    }}
+                  />
+                )
+          }
         </div>
         <div>{ slots.footer?.() }</div>
       </div>

@@ -1,5 +1,12 @@
-import { getHighlighterCore, loadWasm } from 'shiki/core'
-import type { BundledLanguageInfo, BundledThemeInfo, CodeToHastOptions, HighlighterCore, LanguageRegistration, ThemeRegistration } from 'shiki/core'
+import { createHighlighterCore, loadWasm } from 'shiki'
+import type {
+  BundledLanguageInfo,
+  BundledThemeInfo,
+  CodeToHastOptions,
+  HighlighterCore,
+  LanguageRegistration,
+  ThemeRegistration,
+} from 'shiki'
 import wasm from 'shiki/wasm'
 
 let globalBundles: {
@@ -52,7 +59,7 @@ export async function loadHighlighter(props: {
   } = props
 
   await loadBundles(skipLoadShikiBundled)
-  const highlighter = await getHighlighterCore()
+  const highlighter = await createHighlighterCore()
 
   return highlighter
 }

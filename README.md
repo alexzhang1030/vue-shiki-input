@@ -34,7 +34,7 @@ const text = ref('const a = 1;')
     v-model="text"
     class="w-500px h-500px bg-gray-800 text-gray-200"
     :langs="['javascript']" :themes="['vitesse-dark']"
-    :code-to-hast-options="{
+    :code-to-html-options="{
       lang: 'javascript',
       theme: 'vitesse-dark',
     }"
@@ -79,7 +79,7 @@ export interface VueShikiInputProps {
   /**
    * Same as codeToHTML props in shiki
    */
-  codeToHastOptions?: CodeToHastOptions
+  codeToHtmlOptions?: CodeToHastOptions
   /**
    * Show line numbers
    */

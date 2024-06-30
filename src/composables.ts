@@ -1,9 +1,21 @@
 import type { Ref } from 'vue'
 import { computed, ref, shallowRef, watchEffect } from 'vue'
-import type { HighlighterCore, LanguageRegistration, ThemeRegistration, ThemeRegistrationResolved } from 'shiki/core'
+import type {
+  HighlighterCore,
+  LanguageRegistration,
+  ThemeRegistration,
+  ThemeRegistrationResolved,
+} from 'shiki'
 import { watchDebounced } from '@vueuse/core'
 import type { ResolvedVueShikiInputProps } from './types'
-import { currentLangLoaded, currentThemeLoaded, getCurrentTheme, loadHighlighter, loadLanguages, loadThemes } from './utils'
+import {
+  currentLangLoaded,
+  currentThemeLoaded,
+  getCurrentTheme,
+  loadHighlighter,
+  loadLanguages,
+  loadThemes,
+} from './utils'
 
 export function useHighlight(input: Ref<string | undefined>, props: Ref<ResolvedVueShikiInputProps>) {
   const preloading = ref(false)
@@ -20,7 +32,7 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
 
   const propsThemes = computed(() => props.value.themes ?? [])
   const propsLangs = computed(() => props.value.langs ?? [])
-  const propsCodeToHastOptions = computed(() => props.value.codeToHastOptions ?? {})
+  const propsCodeToHtmlOptions = computed(() => props.value.codeToHtmlOptions ?? {})
 
   // Preload logic
   watchEffect(async () => {
@@ -62,7 +74,7 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
     preloading.value = false
   })
 
-  watchDebounced(() => [input.value, propsCodeToHastOptions.value, highlighter.value, preloading.value] as const, async (
+  watchDebounced(() => [input.value, propsCodeToHtmlOptions.value, highlighter.value, preloading.value] as const, async (
     [,,highlighter, preloading],
   ) => {
     if (!highlighter || preloading) {
@@ -70,8 +82,8 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
       return
     }
 
-    const { loaded: themeLoaded, preloaded: themePreloaded, id: themeId } = currentThemeLoaded(highlighter, props.value.codeToHastOptions)
-    const { loaded: langLoaded, preloaded: langPreloaded, id: langId } = currentLangLoaded(highlighter, props.value.codeToHastOptions)
+    const { loaded: themeLoaded, preloaded: themePreloaded, id: themeId } = currentThemeLoaded(highlighter, props.value.codeToHtmlOptions)
+    const { loaded: langLoaded, preloaded: langPreloaded, id: langId } = currentLangLoaded(highlighter, props.value.codeToHtmlOptions)
 
     // if current theme / lang is not loaded but preloaded, skip
     // cause will rerun this fn when loaded
@@ -95,7 +107,7 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
 
   function highlighting(highlighter: HighlighterCore) {
     loadingToHTML.value = true
-    output.value = highlighter.codeToHtml(input.value ?? '', props.value.codeToHastOptions)
+    output.value = highlighter.codeToHtml(input.value ?? '', props.value.codeToHtmlOptions)
     loadingToHTML.value = false
   }
 
@@ -104,10 +116,10 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
   watchEffect(() => {
     if (!highlighter.value || !props.value || !props.value.autoBackground || preloading.value || loadingOnDemand.value)
       return
-    const { loaded } = currentLangLoaded(highlighter.value, props.value.codeToHastOptions)
+    const { loaded } = currentLangLoaded(highlighter.value, props.value.codeToHtmlOptions)
     if (!loaded)
       return
-    const theme = getCurrentTheme(props.value.codeToHastOptions, highlighter.value)
+    const theme = getCurrentTheme(props.value.codeToHtmlOptions, highlighter.value)
     if (!theme)
       return
     const color = theme.bg

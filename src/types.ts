@@ -1,4 +1,4 @@
-import type { CodeToHastOptions, LanguageInput, ThemeInput } from 'shiki/core'
+import type { CodeToHastOptions, LanguageInput, ThemeInput } from 'shiki'
 import type { Prop } from 'vue'
 
 export interface VueShikiInputProps {
@@ -30,7 +30,7 @@ export interface VueShikiInputProps {
   /**
    * Same as codeToHTML props in shiki
    */
-  codeToHastOptions?: CodeToHastOptions
+  codeToHtmlOptions?: CodeToHastOptions
   /**
    * Show line numbers
    */
@@ -96,7 +96,7 @@ export const vueShikiInputProps = {
     type: Boolean,
     default: false,
   },
-  codeToHastOptions: {
+  codeToHtmlOptions: {
     type: Object,
     default: () => ({}),
   },

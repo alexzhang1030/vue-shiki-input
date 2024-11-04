@@ -2,7 +2,7 @@
   "name": "vue-shiki-input",
   "type": "module",
   "version": "2.0.1",
-  "packageManager": "pnpm@9.12.2",
+  "packageManager": "pnpm@9.12.3",
   "description": "A Shiki input component for Vue.",
   "author": "alexzhang1030",
   "license": "MIT",
@@ -54,7 +54,7 @@
     "@iconify-json/svg-spinners": "^1.2.1",
     "@unocss/reset": "^0.63.6",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
-    "bumpp": "^9.7.1",
+    "bumpp": "^9.8.0",
     "eslint": "npm:eslint-ts-patch@8.56.0-0",
     "eslint-ts-patch": "8.56.0-0",
     "lint-staged": "^15.2.10",
@@ -65,7 +65,7 @@
     "vite": "^5.4.10",
     "vite-plugin-dts": "^4.3.0",
     "vite-tsconfig-paths": "^5.0.1",
-    "vitepress": "^1.4.1"
+    "vitepress": "^1.4.5"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

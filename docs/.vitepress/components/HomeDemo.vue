@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
+import { fetchShikiBundles, VueShikiInput } from '../../../src'
 import '../../../src/style.css'
-import { VueShikiInput, fetchShikiBundles } from '../../../src'
 
 const text = ref('')
 

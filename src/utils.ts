@@ -1,4 +1,3 @@
-import { createHighlighterCore, loadWasm } from 'shiki'
 import type {
   BundledLanguageInfo,
   BundledThemeInfo,
@@ -7,6 +6,7 @@ import type {
   LanguageRegistration,
   ThemeRegistration,
 } from 'shiki'
+import { createHighlighterCore, loadWasm } from 'shiki'
 import wasm from 'shiki/wasm'
 
 let globalBundles: {

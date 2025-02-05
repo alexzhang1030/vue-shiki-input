@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
 import VueJSX from '@vitejs/plugin-vue-jsx'
-import DTS from 'vite-plugin-dts'
 import UnoCSS from 'unocss/vite'
+import { defineConfig } from 'vite'
+import DTS from 'vite-plugin-dts'
 import TSConfigPaths from 'vite-tsconfig-paths'
 import { peerDependencies } from './package.json'
 

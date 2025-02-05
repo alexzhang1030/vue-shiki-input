@@ -1,11 +1,11 @@
-import { useScroll, useVModel } from '@vueuse/core'
 import type { Ref, SlotsType } from 'vue'
+import type { ResolvedVueShikiInputProps } from './types'
+import { useScroll, useVModel } from '@vueuse/core'
 import { defineComponent, ref, toRef, watchEffect } from 'vue'
+import { useHighlight } from './composables'
+import { vueShikiInputProps } from './types'
 import 'uno.css'
 import './style.css'
-import { useHighlight } from './composables'
-import type { ResolvedVueShikiInputProps } from './types'
-import { vueShikiInputProps } from './types'
 
 const commonClass = 'h-full tab-4 whitespace-pre inset-0 font-mono tracking-normal box-border!'
 

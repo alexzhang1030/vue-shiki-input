@@ -1,6 +1,6 @@
-import { defineConfig } from 'vitepress'
-import unocss from 'unocss/vite'
 import jsx from '@vitejs/plugin-vue-jsx'
+import unocss from 'unocss/vite'
+import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

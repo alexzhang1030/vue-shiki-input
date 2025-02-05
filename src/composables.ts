@@ -1,13 +1,13 @@
-import type { Ref } from 'vue'
-import { computed, ref, shallowRef, watchEffect } from 'vue'
 import type {
   HighlighterCore,
   LanguageRegistration,
   ThemeRegistration,
   ThemeRegistrationResolved,
 } from 'shiki'
-import { watchDebounced } from '@vueuse/core'
+import type { Ref } from 'vue'
 import type { ResolvedVueShikiInputProps } from './types'
+import { watchDebounced } from '@vueuse/core'
+import { computed, ref, shallowRef, watchEffect } from 'vue'
 import {
   currentLangLoaded,
   currentThemeLoaded,

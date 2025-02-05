@@ -1,4 +1,4 @@
-name: CI
+name: autofix.ci
 
 on:
   push:
@@ -10,22 +10,29 @@ on:
       - main
 
 jobs:
-  ci:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Enable pnpm
-        run: npm i -g --force corepack && corepack enable
-      - name: Setup node
+
+      - name: Set node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.x
-          cache: pnpm
-      - name: Setup ni
+          node-version: lts/*
+
+      - name: Install pnpm
+        run: npm i -g --force corepack && corepack enable pnpm
+
+      - name: Setup
         run: npm i -g @antfu/ni
+
       - name: Install
         run: nci
+
       - name: Build
         run: nr build
+
       - name: Lint
-        run: nr lint
+        run: nr lint --fix
+
+      - uses: autofix-ci/action@551dded8c6cc8a1054039c8bc0b8b48c51dfc6ef

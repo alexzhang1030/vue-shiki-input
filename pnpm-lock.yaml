@@ -34,8 +34,8 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1(vite@6.0.11(jiti@2.4.1)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))
       bumpp:
-        specifier: ^9.11.1
-        version: 9.11.1
+        specifier: ^10.0.1
+        version: 10.0.1
       eslint:
         specifier: npm:eslint-ts-patch@8.56.0-0
         version: eslint-ts-patch@8.56.0-0
@@ -1494,9 +1494,9 @@ packages:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
     engines: {node: '>=6'}
 
-  bumpp@9.11.1:
-    resolution: {integrity: sha512-jBHlab9NnRwrpHsockb5E+MBo0os2yS6S7i3cnN8hB6EkTardKQotmd0CFdOc8pubLz2fxj2AD6RGtrySVG6Mw==}
-    engines: {node: '>=10'}
+  bumpp@10.0.1:
+    resolution: {integrity: sha512-TBCR4FjNiubf+t6QFncNHJzCDwcz6SM2PPt/UoIGwGoe5ZTbSqu37nNJFlxBngWCUb1rYbf43ocNT1pPaNu5CQ==}
+    engines: {node: '>=18'}
     hasBin: true
 
   bundle-require@5.0.0:
@@ -2880,9 +2880,6 @@ packages:
 
   text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
-
-  tiny-conventional-commits-parser@0.0.1:
-    resolution: {integrity: sha512-N5+AZWdBeHNSgTIaxvx0+9mFrnW4H1BbjQ84H7i3TuWSkno8Hju886hLaHZhE/hYEKrfrfl/uHurqpZJHDuYGQ==}
 
   tinyexec@0.3.2:
     resolution: {integrity: sha512-KQQR9yN7R5+OSwaK0XQoj22pwHoTlgYqmUscPYoknOoWCWfj/5/ABTMRi69FrKU5ffPVh5QcFikpWJI/P1ocHA==}
@@ -4671,7 +4668,7 @@ snapshots:
 
   builtin-modules@3.3.0: {}
 
-  bumpp@9.11.1:
+  bumpp@10.0.1:
     dependencies:
       c12: 2.0.1
       cac: 6.7.14
@@ -4681,7 +4678,6 @@ snapshots:
       package-manager-detector: 0.2.8
       prompts: 2.4.2
       semver: 7.6.3
-      tiny-conventional-commits-parser: 0.0.1
       tinyexec: 0.3.2
       tinyglobby: 0.2.10
     transitivePeerDependencies:
@@ -6184,8 +6180,6 @@ snapshots:
       yallist: 4.0.0
 
   text-table@0.2.0: {}
-
-  tiny-conventional-commits-parser@0.0.1: {}
 
   tinyexec@0.3.2: {}
 

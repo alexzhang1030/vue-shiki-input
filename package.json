@@ -49,7 +49,7 @@
     "vue": ">=3.2.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.27.3",
+    "@antfu/eslint-config": "^4.1.1",
     "@iconify-json/carbon": "^1.2.6",
     "@iconify-json/svg-spinners": "^1.2.2",
     "@unocss/reset": "^65.4.3",

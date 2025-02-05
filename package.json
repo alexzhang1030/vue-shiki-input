@@ -54,7 +54,7 @@
     "@iconify-json/svg-spinners": "^1.2.2",
     "@unocss/reset": "^65.4.3",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
-    "bumpp": "^9.11.1",
+    "bumpp": "^10.0.1",
     "eslint": "npm:eslint-ts-patch@8.56.0-0",
     "eslint-ts-patch": "8.56.0-0",
     "lint-staged": "^15.4.3",

@@ -2,7 +2,7 @@
   "name": "vue-shiki-input",
   "type": "module",
   "version": "2.0.1",
-  "packageManager": "pnpm@10.6.5",
+  "packageManager": "pnpm@10.7.0",
   "description": "A Shiki input component for Vue.",
   "author": "alexzhang1030",
   "license": "MIT",
@@ -61,7 +61,7 @@
     "typescript": "^5.8.2",
     "unocss": "^66.0.0",
     "unplugin-vue-components": "^28.4.1",
-    "vite": "^6.2.2",
+    "vite": "^6.2.3",
     "vite-plugin-dts": "^4.5.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitepress": "^1.6.3"

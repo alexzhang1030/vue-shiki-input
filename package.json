@@ -53,7 +53,7 @@
     "@iconify-json/carbon": "^1.2.14",
     "@iconify-json/svg-spinners": "^1.2.4",
     "@unocss/reset": "^66.5.3",
-    "@vitejs/plugin-vue-jsx": "^4.2.0",
+    "@vitejs/plugin-vue-jsx": "^5.1.1",
     "bumpp": "^10.3.1",
     "eslint": "^9.37.0",
     "lint-staged": "^16.2.4",

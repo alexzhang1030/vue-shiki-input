@@ -6,9 +6,8 @@ import type {
   LanguageRegistration,
   ThemeRegistration,
 } from 'shiki'
-import { createHighlighterCore, loadWasm } from 'shiki'
+import { createHighlighterCore } from 'shiki'
 import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
-import wasm from 'shiki/wasm'
 
 let globalBundles: {
   bundledLanguagesInfo: BundledLanguageInfo[]
@@ -31,7 +30,6 @@ export async function fetchShikiBundles() {
 }
 
 async function fetchBundles(skip: boolean) {
-  await loadWasm(wasm).catch(console.error)
   if (skip)
     return globalBundles
   const { bundledLanguagesInfo, bundledThemesInfo } = await fetchShikiBundles()
@@ -61,7 +59,7 @@ export async function loadHighlighter(props: {
 
   await loadBundles(skipLoadShikiBundled)
   const highlighter = await createHighlighterCore({
-    engine: createOnigurumaEngine(),
+    engine: createOnigurumaEngine(() => import('shiki/wasm')),
   })
 
   return highlighter

@@ -45,8 +45,8 @@
   },
   "peerDependencies": {
     "@vueuse/core": ">=9.0.0",
-    "shiki": ">=1.9.0",
-    "vue": ">=3.2.0"
+    "shiki": ">=3.0.0",
+    "vue": ">=3.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.7.1",
@@ -54,6 +54,7 @@
     "@iconify-json/svg-spinners": "^1.2.4",
     "@unocss/reset": "^66.5.10",
     "@vitejs/plugin-vue-jsx": "^5.1.2",
+    "baseline-browser-mapping": "^2.9.7",
     "bumpp": "^10.3.2",
     "eslint": "^9.39.2",
     "lint-staged": "^16.2.7",
@@ -64,7 +65,8 @@
     "vite": "^7.3.0",
     "vite-plugin-dts": "^4.5.4",
     "vite-tsconfig-paths": "^6.0.1",
-    "vitepress": "^1.6.4"
+    "vitepress": "^1.6.4",
+    "vitest": "^4.0.15"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

@@ -7,6 +7,7 @@ import type {
   ThemeRegistration,
 } from 'shiki'
 import { createHighlighterCore, loadWasm } from 'shiki'
+import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
 import wasm from 'shiki/wasm'
 
 let globalBundles: {
@@ -59,7 +60,9 @@ export async function loadHighlighter(props: {
   } = props
 
   await loadBundles(skipLoadShikiBundled)
-  const highlighter = await createHighlighterCore()
+  const highlighter = await createHighlighterCore({
+    engine: createOnigurumaEngine(),
+  })
 
   return highlighter
 }

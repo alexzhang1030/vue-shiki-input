@@ -3,3 +3,7 @@ trustPolicy: no-downgrade
 
 packages:
   - playground
+
+onlyBuiltDependencies:
+  - esbuild
+  - simple-git-hooks

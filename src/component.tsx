@@ -4,10 +4,7 @@ import { useScroll, useVModel } from '@vueuse/core'
 import { defineComponent, ref, toRef, watchEffect } from 'vue'
 import { useHighlight } from './composables'
 import { vueShikiInputProps } from './types'
-import 'uno.css'
 import './style.css'
-
-const commonClass = 'h-full tab-4 whitespace-pre inset-0 font-mono tracking-normal box-border!'
 
 export const VueShikiInput = defineComponent({
   props: vueShikiInputProps,
@@ -43,7 +40,7 @@ export const VueShikiInput = defineComponent({
     return () => (
       <div
         class={[
-          'overflow-hidden rounded-4px __shiki-vue-input-container grid grid-rows-[auto_1fr_auto]',
+          '__shiki-vue-input-container',
         ]}
         style={[
           props.autoBackground && background.value?.color
@@ -55,7 +52,7 @@ export const VueShikiInput = defineComponent({
       >
         <div>{ slots.header?.() }</div>
         <div
-          class={['__shiki-vue-input relative overflow-hidden', {
+          class={['__shiki-vue-input', {
             'line-numbers': props.lineNumbers,
           }]}
           style={{
@@ -66,8 +63,7 @@ export const VueShikiInput = defineComponent({
             ref={highlightContainerRef}
             innerHTML={output.value}
             class={[
-              commonClass,
-              'block absolute w-full',
+              '__shiki-vue-input-highlighted',
             ]}
             style={{
               top: `${-y.value}px`,
@@ -89,15 +85,11 @@ export const VueShikiInput = defineComponent({
                     ref={textareaRef}
                     disabled={props.disabled}
                     class={[
-                      commonClass,
-                      'absolute z-10 resize-none font-mono overflow-auto bg-transparent b-none',
-                      'outline-none text-transparent p-0',
-                      props.lineNumbers ? 'ml-2.5rem! w-[calc(100%-2.5rem)]!' : 'w-full!',
-                      [
-                        props.darkTheme || background.value?.type === 'dark'
-                          ? 'caret-white'
-                          : 'caret-black',
-                      ],
+                      '__shiki-vue-input-textarea',
+                      {
+                        'has-line-numbers': props.lineNumbers,
+                        'is-dark': props.darkTheme || background.value?.type === 'dark',
+                      },
                     ]}
                     style={{
                       padding: `${props.offset!.y}px ${props.offset!.x}px`,

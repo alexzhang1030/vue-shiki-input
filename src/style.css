@@ -1,6 +1,58 @@
 .__shiki-vue-input-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+  border-radius: 4px;
 
   .__shiki-vue-input {
+    position: relative;
+    overflow: hidden;
+
+    .__shiki-vue-input-highlighted, .__shiki-vue-input-textarea {
+      height: 100%;
+      -moz-tab-size: 4;
+      -o-tab-size: 4;
+      tab-size: 4;
+      white-space: pre;
+      inset: 0;
+      font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+      letter-spacing: 0em;
+      box-sizing: border-box !important;
+    }
+
+    .__shiki-vue-input-highlighted {
+      display: block;
+      position: absolute;
+      width: 100%;
+
+      pre {
+        margin: 0;
+      }
+    }
+
+    .__shiki-vue-input-textarea {
+      position: absolute;
+      z-index: 10;
+      resize: none;
+      overflow: auto;
+      background-color: transparent;
+      border-style: none;
+      outline-style: none;
+      color: transparent;
+      padding: 0;
+
+      width: 100% !important;
+      &.has-line-numbers {
+        margin-left: 2.5rem !important;
+        width: calc(100% - 2.5rem) !important;
+      }
+
+      caret-color: black;
+      &.is-dark {
+        caret-color: white;
+      }
+    }
+
     &.line-numbers {
       code {
         counter-reset: step;
@@ -17,41 +69,5 @@
       }
     }
   }
-
-  /* Copied from `@unocss/reset/tailwind.css` */
-
-  *,
-  ::before,
-  ::after {
-    box-sizing: border-box;
-    border-width: 0;
-    border-style: solid;
-  }
-
-  code, pre {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; 1,
-    font-feature-settings: normal;
-    font-variation-settings: normal;
-    font-size: 1em;
-  }
-
-  code {
-    cursor: text !important;
-  }
-
-  pre {
-    margin: 0;
-  }
-
-  textarea {
-    font-feature-settings: inherit;
-    font-variation-settings: inherit;
-    font-size: 100%;
-    font-weight: inherit;
-    line-height: inherit;
-    margin: 0;
-    padding: 0;
-  }
-
 }
 

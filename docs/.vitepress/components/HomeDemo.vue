@@ -52,6 +52,17 @@ function pickRandomLang() {
   return langs.value[randomLangIndex].id
 }
 
+async function updateSample() {
+  if (currentLang.value) {
+    sampleLoading.value = true
+    const code = await fetchSample(currentLang.value)
+    if (!code)
+      return
+    text.value = code
+    sampleLoading.value = false
+  }
+}
+
 const samplesCache = new Map<string, Promise<string | undefined>>()
 
 function fetchSample(id: string) {
@@ -67,16 +78,9 @@ function fetchSample(id: string) {
 }
 
 async function randomize() {
-  sampleLoading.value = true
-  const theme = pickRandomTheme()
-  const lang = pickRandomLang()
-  const code = await fetchSample(lang)
-  if (!code)
-    return
-  text.value = code
-  currentLang.value = lang
-  currentTheme.value = theme
-  sampleLoading.value = false
+  currentLang.value = pickRandomLang()
+  await updateSample()
+  currentTheme.value = pickRandomTheme()
 }
 </script>
 
@@ -122,6 +126,7 @@ async function randomize() {
         <select
           v-model="currentLang"
           class="font-mono bg-transparent cursor-pointer "
+          @change="updateSample"
         >
           <option v-for="lang in langs" :key="lang.id" :value="lang.id">
             {{ lang.name }}

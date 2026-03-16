@@ -55,7 +55,7 @@
     "@unocss/reset": "^66.5.10",
     "@vitejs/plugin-vue-jsx": "^5.1.2",
     "baseline-browser-mapping": "^2.9.7",
-    "bumpp": "^10.3.2",
+    "bumpp": "^11.0.0",
     "eslint": "^9.39.2",
     "lint-staged": "^16.2.7",
     "simple-git-hooks": "^2.13.1",

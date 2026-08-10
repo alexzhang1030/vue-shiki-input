@@ -24,7 +24,7 @@ pnpm i vue-shiki-input
 <script setup lang="ts">
 import { ref } from 'vue'
 import { VueShikiInput } from 'vue-shiki-input'
-import 'vue-shiki-input/style.css'
+import 'vue-shiki-input/index.css'
 
 const text = ref('const a = 1;')
 </script>

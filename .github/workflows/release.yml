@@ -54,7 +54,7 @@ jobs:
       - name: Publish to npm
         run: |
           unset NODE_AUTH_TOKEN NPM_TOKEN
-          # Prefer npm publish of a packed tarball so the OIDC path uses the
-          # system npm CLI (Trusted Publisher support lives in npm ≥ 11.5.1).
-          tgz=$(pnpm pack --pack-destination "$RUNNER_TEMP")
-          npm publish "$tgz" --access public
+          # Pack with pnpm, publish with npm so OIDC uses npm ≥ 11.5.1 on Node 24.
+          # (pnpm pack stdout is noisy because of lifecycle scripts; use a glob.)
+          pnpm pack --pack-destination "$RUNNER_TEMP"
+          npm publish "$RUNNER_TEMP"/vue-shiki-input-*.tgz --access public

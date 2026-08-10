@@ -5,12 +5,21 @@ on:
     tags:
       - 'v*'
 
+# Trusted Publisher (OIDC) requires id-token: write.
+# Configure on npmjs.com → package → Settings → Trusted Publisher:
+#   Organization or user: alexzhang1030
+#   Repository: vue-shiki-input
+#   Workflow filename: release.yml
+#   Environment: (leave empty unless you add a GitHub Environment below)
+permissions:
+  id-token: write
+  contents: write
+
 jobs:
   release:
-    permissions:
-      id-token: write
-      contents: write
     runs-on: ubuntu-latest
+    # Optional: pin to a GitHub Environment and set the same name on npm Trusted Publisher.
+    # environment: npm
     steps:
       - uses: actions/checkout@v7
         with:
@@ -19,6 +28,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
 
+      # Node 24 ships npm ≥ 11.5.1 required for OIDC trusted publishing.
       - name: Set node
         uses: actions/setup-node@v7
         with:
@@ -26,18 +36,25 @@ jobs:
           cache: pnpm
           registry-url: 'https://registry.npmjs.org'
 
-      - run: npx changelogithub
+      - name: Changelog
+        run: npx changelogithub
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Dependencies
-        run: pnpm i
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --config.dangerously-allow-all-builds=true
+        env:
+          PNPM_CONFIG_DANGEROUSLY_ALLOW_ALL_BUILDS: 'true'
 
-      - name: PNPM build
+      - name: Build
         run: pnpm run build
 
-      - name: Publish to NPM
-        run: pnpm -r publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          NPM_CONFIG_PROVENANCE: true
+      # Publish via OIDC trusted publisher — do NOT set NODE_AUTH_TOKEN / NPM_TOKEN.
+      # A stale write token in the env makes npm/pnpm skip OIDC.
+      - name: Publish to npm
+        run: |
+          unset NODE_AUTH_TOKEN NPM_TOKEN
+          # Prefer npm publish of a packed tarball so the OIDC path uses the
+          # system npm CLI (Trusted Publisher support lives in npm ≥ 11.5.1).
+          tgz=$(pnpm pack --pack-destination "$RUNNER_TEMP")
+          npm publish "$tgz" --access public

@@ -52,9 +52,12 @@ export const VueShikiInput = defineComponent({
       >
         <div>{ slots.header?.() }</div>
         <div
-          class={['__shiki-vue-input', {
-            'line-numbers': props.lineNumbers,
-          }]}
+          class={[
+            '__shiki-vue-input',
+            {
+              'line-numbers': props.lineNumbers,
+            },
+          ]}
           style={{
             '--shiki-vue-input-line-number-color': props.lineNumbersColor,
           }}

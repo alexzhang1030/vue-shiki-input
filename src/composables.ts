@@ -74,7 +74,12 @@ export function useHighlight(input: Ref<string | undefined>, props: Ref<Resolved
     preloading.value = false
   })
 
-  watchDebounced(() => [input.value, propsCodeToHtmlOptions.value, highlighter.value, preloading.value] as const, async (
+  watchDebounced(() => [
+    input.value,
+    propsCodeToHtmlOptions.value,
+    highlighter.value,
+    preloading.value,
+  ] as const, async (
     [,,highlighter, preloading],
   ) => {
     if (!highlighter || preloading) {

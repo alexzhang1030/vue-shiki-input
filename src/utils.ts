@@ -124,11 +124,15 @@ export function currentThemeLoaded(highlighter: HighlighterCore, codeToHastOptio
   const loadedTheme = highlighter.getLoadedThemes()
 
   const theme = getCurrentThemeName(codeToHastOptions)
-  const themeId = typeof theme === 'string' ? theme : theme?.name
+  const themeId = typeof theme === 'string'
+    ? theme
+    : theme?.name
 
   return {
     loaded: themeId && loadedTheme.includes(themeId),
-    preloaded: themeId ? themeCache.has(themeId) : false,
+    preloaded: themeId
+      ? themeCache.has(themeId)
+      : false,
     id: themeId,
   }
 }
@@ -139,7 +143,9 @@ export function currentLangLoaded(highlighter: HighlighterCore, codeToHastOption
 
   return {
     loaded: langId && loadedLang.includes(langId),
-    preloaded: langId ? languageCache.has(langId) : false,
+    preloaded: langId
+      ? languageCache.has(langId)
+      : false,
     id: langId,
   }
 }

@@ -50,7 +50,7 @@
     "vue": ">=3.0.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^9.3.0",
+    "@antfu/eslint-config": "^10.0.0",
     "@iconify-json/carbon": "^1.2.26",
     "@iconify-json/svg-spinners": "^1.2.4",
     "@unocss/reset": "^66.8.1",
